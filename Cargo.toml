@@ -1,0 +1,9 @@
+[package]
+name = "apology-segmenter"
+version = "0.1.0"
+authors = ["J/A <archer884@gmail.com>"]
+
+[dependencies]
+csv = "*"
+lazy_static = "*"
+rustc-serialize = "*"
