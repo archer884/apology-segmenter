@@ -37,10 +37,20 @@ impl Decodable for Record {
             address2: String::new(),
             city: try!(decoder.read_str()).trim().to_owned(),
             region: try!(decoder.read_str()).trim().to_owned(),
-            postal_code: try!(decoder.read_str()).trim().to_owned(),
+            postal_code: clean_postal_code(try!(decoder.read_str()).trim()),
             country: translate(&format!("{:0>4}", try!(decoder.read_str()))),
             phone: clean_phone_number(try!(decoder.read_str())),
         })
+    }
+}
+
+fn clean_postal_code(s: &str) -> String {
+    match s.chars().count() {
+        5 => s.to_owned(),
+        9 => s.to_owned(),
+        n if n < 5 => format!("{:0>5}", s),
+        n if n < 9 => format!("{:0>9}", s),
+        _ => s.to_owned(),
     }
 }
 
